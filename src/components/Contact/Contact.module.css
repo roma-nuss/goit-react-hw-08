@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: rgba(140, 138, 138, 0.39);
+  border-radius: 40px;
+  width: 100%;
+}
+
+.wrapper {
+  padding-right: 15px;
+}
+
+.userBox,
+.phoneBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  color: #f1f1f1;
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #000000;
+  font-size: 25px;
+}
+
+.button {
+  background-color: tomato;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.button:hover {
+  background-color: rgba(255, 0, 0, 0.724);
+}
+
+.button:focus {
+  outline: none;
+}

@@ -1,0 +1,28 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.contact {
+  width: 350px;
+  padding: 20px;
+  border-radius: 10px;
+  list-style-type: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.contact:hover {
+  transform: translateY(-5px);
+}
+
+.contact p {
+  font-size: 18px;
+  color: #333333;
+}
+
+.message {
+  margin: 0 auto;
+}

@@ -1,0 +1,29 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: whitesmoke;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.message {
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+}
+
+.container {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-around;
+}
