@@ -12,12 +12,12 @@ const UserMenu = () => {
   };
 
   return (
-    <div className={s.navbarWrapper}>
+    <>
       <span className={s.hello}>Hello, {user.name}!</span>
       <button type="button" onClick={handleLogout} className={s.button}>
         Logout
       </button>
-    </div>
+    </>
   );
 };
 

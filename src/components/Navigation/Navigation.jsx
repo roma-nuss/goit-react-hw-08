@@ -6,7 +6,8 @@ import { selectIsLoggedIn } from "../../redux/auth/selectors";
 const Navigation = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
-    <nav className={s.navbar}>
+    // <nav className={s.navbar}>
+    <>
       <NavLink to="/" className={s.link}>
         Home
       </NavLink>
@@ -15,7 +16,8 @@ const Navigation = () => {
           Contacts
         </NavLink>
       )}
-    </nav>
+    </>
+    // </nav>
   );
 };
 
