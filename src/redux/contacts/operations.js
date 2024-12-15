@@ -1,44 +1,103 @@
+// import axios from "axios";
+// import { createAsyncThunk } from "@reduxjs/toolkit";
+
+// axios.defaults.baseURL = "https://connections-api.goit.global";
+
+// const setAuthHeader = (token) => {
+//   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+// };
+
+// export const clearAuthHeader = () => {
+//   axios.defaults.headers.common.Authorization = "";
+// };
+
+// export const fetchContacts = createAsyncThunk(
+//   "contacts/fetchContacts",
+//   async (_, { getState, rejectWithValue }) => {
+//     const state = getState();
+//     const token = state.auth.token;
+//     if (!token) {
+//       return rejectWithValue("Token not found. Please log in again.");
+//     }
+
+//     setAuthHeader(token);
+
+//     try {
+//       const { data } = await axios.get("/contacts");
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data?.message || error.message);
+//     }
+//   }
+// );
+
+// export const addContact = createAsyncThunk(
+//   "contacts/addContact",
+//   async (contact, { getState, rejectWithValue }) => {
+//     const state = getState();
+//     const token = state.auth.token;
+//     if (!token) {
+//       return rejectWithValue("Token not found. Please log in again.");
+//     }
+
+//     setAuthHeader(token);
+
+//     try {
+//       const { data } = await axios.post("/contacts", contact);
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data?.message || error.message);
+//     }
+//   }
+// );
+
+// export const deleteContact = createAsyncThunk(
+//   "contacts/deleteContact",
+//   async (contactId, { getState, rejectWithValue }) => {
+//     const state = getState();
+//     const token = state.auth.token;
+//     if (!token) {
+//       return rejectWithValue("Token not found. Please log in again.");
+//     }
+
+//     setAuthHeader(token);
+
+//     try {
+//       await axios.delete(`/contacts/${contactId}`);
+//       return contactId;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data?.message || error.message);
+//     }
+//   }
+// );
+
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-axios.defaults.baseURL = "https://connections-api.goit.global";
+const BASE_URL = "https://connections-api.goit.global";
 
-const setAuthHeader = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-export const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = "";
-};
-
-const fetchWithAuth = async (method, url, data = null, token) => {
-  setAuthHeader(token);
-
-  try {
-    const response = await axios({
-      method,
-      url,
-      data,
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || error.message);
-  }
+const fetchWithAuth = (token) => {
+  return axios.create({
+    baseURL: BASE_URL,
+    headers: { Authorization: `Bearer ${token}` },
+  });
 };
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchContacts",
   async (_, { getState, rejectWithValue }) => {
-    const token = getState().auth.token;
+    const state = getState();
+    const token = state.auth.token;
+
     if (!token) {
       return rejectWithValue("Token not found. Please log in again.");
     }
 
     try {
-      const data = await fetchWithAuth("get", "/contacts", null, token);
+      const { data } = await fetchWithAuth(token).get("/contacts");
       return data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -46,16 +105,18 @@ export const fetchContacts = createAsyncThunk(
 export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (contact, { getState, rejectWithValue }) => {
-    const token = getState().auth.token;
+    const state = getState();
+    const token = state.auth.token;
+
     if (!token) {
       return rejectWithValue("Token not found. Please log in again.");
     }
 
     try {
-      const data = await fetchWithAuth("post", "/contacts", contact, token);
+      const { data } = await fetchWithAuth(token).post("/contacts", contact);
       return data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
@@ -63,16 +124,18 @@ export const addContact = createAsyncThunk(
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
   async (contactId, { getState, rejectWithValue }) => {
-    const token = getState().auth.token;
+    const state = getState();
+    const token = state.auth.token;
+
     if (!token) {
       return rejectWithValue("Token not found. Please log in again.");
     }
 
     try {
-      await fetchWithAuth("delete", `/contacts/${contactId}`, null, token);
+      await fetchWithAuth(token).delete(`/contacts/${contactId}`);
       return contactId;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );

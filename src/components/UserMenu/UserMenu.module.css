@@ -1,0 +1,29 @@
+.navbarWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+}
+
+.hello {
+  font-style: bold;
+  font-size: 26px;
+  color: #fff;
+}
+
+.button {
+  background-color: #fff;
+  color: black;
+  font-style: bold;
+  border: none;
+  margin-left: 20px;
+  padding: 8px 15px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #ffffff8a;
+}

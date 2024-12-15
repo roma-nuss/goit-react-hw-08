@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
-import Contacts from "./pages/Contacts/Contacts";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import Registration from "./pages/Registration/Registration";
+
 import Layout from "./components/Layout/Layout";
 import { refreshUser } from "./redux/auth/operations";
+
+const Home = lazy(() => import("./pages/Home/Home"));
+const Contacts = lazy(() => import("./pages/Contacts/Contacts"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const Registration = lazy(() => import("./pages/Registration/Registration"));
 
 function App() {
   const dispatch = useDispatch();
@@ -23,32 +25,33 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
         <Route
-          path="register"
+          path="/register"
           element={
             <RestrictedRoute
-              component={<Registration />}
               redirectTo="/contacts"
+              component={<Registration />}
             />
           }
         />
         <Route
-          path="login"
+          path="/login"
           element={
-            <RestrictedRoute component={<Login />} redirectTo="/contacts" />
+            <RestrictedRoute redirectTo="/contacts" component={<Login />} />
           }
         />
         <Route
-          path="contacts"
+          path="/contacts"
           element={
-            <PrivateRoute component={<Contacts />} redirectTo="/login" />
+            <PrivateRoute redirectTo="/login" component={<Contacts />} />
           }
         />
-      </Route>
-    </Routes>
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </Layout>
   );
 }
 

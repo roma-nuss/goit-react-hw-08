@@ -8,24 +8,18 @@ const setAuthHeader = (token) => {
 };
 
 const clearAuthHeader = () => {
-  delete axios.defaults.headers.common.Authorization;
-};
-
-const handleRequestError = (error, thunkAPI) => {
-  return thunkAPI.rejectWithValue(
-    error.response?.data?.message || error.message
-  );
+  axios.defaults.headers.common.Authorization = "";
 };
 
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.post("/users/signup", credentials);
-      setAuthHeader(data.token);
-      return data;
+      const res = await axios.post("/users/signup", credentials);
+      setAuthHeader(res.data.token);
+      return res.data;
     } catch (error) {
-      return handleRequestError(error, thunkAPI);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -34,11 +28,11 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.post("/users/login", credentials);
-      setAuthHeader(data.token);
-      return data;
+      const res = await axios.post("/users/login", credentials);
+      setAuthHeader(res.data.token);
+      return res.data;
     } catch (error) {
-      return handleRequestError(error, thunkAPI);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -48,27 +42,26 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     await axios.post("/users/logout");
     clearAuthHeader();
   } catch (error) {
-    return handleRequestError(error, thunkAPI);
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
 
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const {
-      auth: { token },
-    } = thunkAPI.getState();
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
 
-    if (!token) {
+    if (persistedToken === null) {
       return thunkAPI.rejectWithValue("Unable to fetch user");
     }
 
     try {
-      setAuthHeader(token);
-      const { data } = await axios.get("/users/current");
-      return data;
+      setAuthHeader(persistedToken);
+      const res = await axios.get("/users/current");
+      return res.data;
     } catch (error) {
-      return handleRequestError(error, thunkAPI);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

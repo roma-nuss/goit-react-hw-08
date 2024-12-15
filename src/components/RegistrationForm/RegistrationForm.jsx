@@ -5,7 +5,7 @@ import { register } from "../../redux/auth/operations";
 import { GoPersonFill } from "react-icons/go";
 import { PiLockKeyFill } from "react-icons/pi";
 import { MdEmail } from "react-icons/md";
-import s from "./Form.module.css";
+import s from "./RegistrationForm.module.css";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();

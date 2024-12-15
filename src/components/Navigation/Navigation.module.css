@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.link {
+  font-weight: bold;
+  color: white;
+  font-size: 1.4rem;
+  text-decoration: none;
+}
+
+.active {
+  text-decoration: underline;
+  color: #696969;
+}

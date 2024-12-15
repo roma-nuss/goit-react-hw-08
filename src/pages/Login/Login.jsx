@@ -1,10 +1,10 @@
-import Entry from "../../components/Entry/Entry";
+import LoginForm from "../../components/LoginForm/LoginForm";
 
 const Login = () => {
   return (
     <div>
       <h2 className="titleForm">Login Form</h2>
-      <Entry />
+      <LoginForm />
     </div>
   );
 };

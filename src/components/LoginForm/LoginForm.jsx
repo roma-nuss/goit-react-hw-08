@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/auth/operations";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
-import s from "./Entry.module.css";
+import s from "./LoginForm.module.css";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
